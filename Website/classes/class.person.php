@@ -71,9 +71,9 @@ public static function validateLogin($username, $password){
 	 $staffNum = $row['VchStaffID'];
 	if (!is_null($staffNum)){
     //User is a member of staff
-    $user = Staff::withParameters($personID, $forename, $surname, $password, $email);
-  }else{
-    $user = Person::withParameters($personID, $forename, $surname, $password, $email);
+		$user = Staff::withParameters($personID, $forename, $surname, $password, $email);
+	}else{
+		$user = Student::withParameters($personID, $forename, $surname, $password, $email);
 	}
 	$user->setJoinDate($joinDate);
 	$user->login();
@@ -96,9 +96,6 @@ public static function getLoggedInUser(){
   $p = $_SESSION["loggedIn"];
   
 	return $p;
-}
-public function getUserType(){
-return 'Person';
 }
 public function setJoinDate($value){
 $this->joinDate = $value;

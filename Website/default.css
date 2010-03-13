@@ -255,7 +255,9 @@ color:#000000;
 text-decoration:none;
 font-size:10pt;
 cursor:pointer;
-line-height:30px;
+line-height:2em;
+display:block;
+float:left;
 }
 .article-listentry{
 border-bottom:1px solid #000;

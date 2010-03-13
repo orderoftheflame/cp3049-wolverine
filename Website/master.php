@@ -15,7 +15,8 @@ Wolverine :: Project Management System
 </title>
 <script src="js/prototype.js" type="text/javascript"></script>
 <script src="js/scriptaculous.js" type="text/javascript"></script>
-
+<script src="js/utility.js" type="text/javascript"></script>
+<script src="js/ajax_query.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="default.css" media="screen" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <?php
@@ -79,6 +80,7 @@ Wolverine
       echo '<ul>';
       echo '<li><a href="assign-students.php">Assign Students</a></li>';
       echo '<li><a href="manage-staff.php">Manage Staff</a></li>';
+	  echo '<li><a href="manage-groups.php">Manage Student Groups</a></li>';
       echo '</ul>';
     }
   }

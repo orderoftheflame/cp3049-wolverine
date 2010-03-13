@@ -36,6 +36,7 @@ public function submit(){
     ".$this->getAuthor().",
     ".date('Y-m-d H:i:s')."
   )";
+  //TODO: Exec SQL
 }
 
 //Getters and setters
