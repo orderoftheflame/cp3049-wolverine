@@ -15,10 +15,18 @@ public static function withParameters($groupTitle, $details, $day, $time)
 	$group->setDetails($details);
 	$group->setDay($day);
 	$group->setTime($time);
-	return $project;
+	return $group;
 }
 
 //Database
+public static function fromDatabase($groupID){
+	$sql = "SELECT * FROM wv_studentgroups WHERE IntGroupID = ".$groupID;
+	$queryResult = mysql_query($sql) or die('Error: '.mysql_error ());
+	while($row = mysql_fetch_array($queryResult))
+	{
+	return StudentGroup::fromRow($row);
+	}
+}
 public static function fromRow($row){
 	$groupID = $row['IntGroupID'];
 	$title = $row['VchGroupTitle'];
@@ -34,14 +42,22 @@ public static function fromRow($row){
 public function save(){
   $sql = "INSERT INTO wv_studentgroups (VchGroupTitle, VchGroupDetails, VchGroupDay, TimeGroupMeeting, DateTimeCreated)
   VALUES (
-    ".$this->getTitle().",
-    ".$this->getDetails().",
-	".$this->getDay().",
-	".$this->getTime().",
-    ".date('Y-m-d H:i:s')."
+    '".$this->getTitle()."',
+    '".$this->getDetails()."',
+	'".$this->getDay()."',
+	'".$this->getTime()."',
+    '".date('Y-m-d H:i:s')."'
   )";
+   mysql_query($sql) or die('Error: '.mysql_error ());
+   $this->setGroupID( mysql_insert_id());
 }
-
+//Static so we don't have to instantiate a group object just to delete it
+public static function delete($groupID){
+//QUERY: DD-Not a huge fan of deleting without archiving, consider archiving this informatinon or implementing soft delete?
+	$sql = "DELETE FROM wv_studentgroups WHERE IntGroupID = ".$groupID;
+	//TODO: DD-Remove student group links with the group ID we are removing.
+	mysql_query($sql) or die('Error: '.mysql_error ());
+}
 //Getters and setters
 public function setGroupID($value){
 	$this->groupID = $value;
@@ -60,7 +76,7 @@ public function setTime($value){
 }
 
 public function getGroupID(){
-	return $this->projectID;
+	return $this->groupID;
 }
 public function getTitle(){
 	return $this->title;
@@ -68,10 +84,10 @@ public function getTitle(){
 public function getDetails(){
 	return $this->details;
 }
-public function setDay(){
+public function getDay(){
 	return $this->day;
 }
-public function setTime(){
+public function getTime(){
 	return $this->time;
 }
 }

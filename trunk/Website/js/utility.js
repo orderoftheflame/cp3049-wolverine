@@ -8,10 +8,12 @@ function randomString() {
 	}
 	return randomstring;
 }
-function verifyDelete(){
+
+
+function verifyDeleteSecured(){
 var validationString = randomString();
 var rnum = Math.floor(Math.random() * validationString.length) + 1;
-var promptString = 'Seriously? For security, please type character ' + (rnum) + ' of ' + validationString + ' into the box provided.';
+var promptString = 'Are you sure? For security, please type character ' + (rnum) + ' of ' + validationString + ' into the box provided.';
 return prompt(promptString) == validationString.substring(rnum-1,rnum);
 }
 

@@ -7,10 +7,13 @@
   
 	if (!is_null($user)){
 		if (!$user->isAdmin()){
-    $rawError = "You do not have permission to access this page";
-    include('error.php');
-    }
-  }
+			$rawError = "You do not have permission to access this page";
+			include('error.php');
+		}
+	}else{
+		$rawError = "You do not have permission to access this page";
+		include('error.php');
+	}
 
 	
 
@@ -28,7 +31,7 @@
 </form>
 </div>
 <form action="register.php" method="post" name="signup">
-<div class="bordered half-width padded right" id="divRegister">
+<div class="bordered half-width padded left" id="divRegister">
 <p><span class="left"><h2>Register</h2></span></p>
 <p>Please enter your details below to sign up</p>
 <p><span class="left"><label for="txtStudentNumber">Staff Number:</label> </span><span class="right"><input type="text" name="txtStudentNumber" maxlength="120" /></span></p>
@@ -36,7 +39,7 @@
 <p><span class="left"><label for="txtForename">Forename:</label> </span><span class="right"><input type="text" name="txtForename" maxlength="120" /></span></p>
 <p><span class="left"><label for="txtSurname">Surname:</label> </span><span class="right"><input type="text" name="txtSurname" maxlength="120" /></span></p>
 <p><span class="left"><label for="txtEmail">Email:</label> </span><span class="right"><input type="text" name="txtEmail" maxlength="50" /></span></p>
-<p><span class="right"><input type="submit" name="btnSignUp" value="Create User" class="yellow bordered margin button" /></span></p>
+<p><span class="right"><input type="submit" name="btnSignUp" value="Create Staff" class="yellow bordered margin" /></span></p>
 <p id="txtUserResult"></p>
 </div>
 </form>
@@ -49,7 +52,7 @@
   //Assign all Page Specific variables
   $page_content = ob_get_contents();
   ob_end_clean();
-  $page_title = "Login/Register";
+  $page_title = "Create staff";
   //Apply the template
   include("master.php");
 ?>
