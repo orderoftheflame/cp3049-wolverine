@@ -19,10 +19,10 @@ public static function withParameters($personID, $forename, $surname, $password,
 	return $user;
 }
 public function isStaff(){
-return false;
+	return false;
 }
 public function isAdmin(){
-return false;
+	return false;
 }
 public static function PersonExists($personID){
 	$sql="SELECT * FROM wv_person WHERE VchPersonIDPK = '".$personID."'";
@@ -36,48 +36,52 @@ public static function PersonExists($personID){
 }
 
 public function register(){
-  $sql = "INSERT INTO wv_person (VchPersonIDPK, VchPersonPassword,VchPersonForeName,VchPersonLastName, VchPersonEmail, DateTimePersonRegistered ) VALUES (
-  '".$this->getPersonID()."',
-  '".sha1($this->getPersonID().$this->getPassword())."',
-  '".$this->getForename()."',
-  '".$this->getSurname()."',
-  '".$this->getEmail()."',
-  '".date('Y-m-d H:i:s')."'
-  )";
-  
-  mysql_query($sql) or die('Error: '.mysql_error ());
-  
-  $this->login();
+	$sql = "INSERT INTO wv_person (VchPersonIDPK, VchPersonPassword,VchPersonForeName,VchPersonLastName, VchPersonEmail, DateTimePersonRegistered ) VALUES (
+	'".$this->getPersonID()."',
+	'".sha1($this->getPersonID().$this->getPassword())."',
+	'".$this->getForename()."',
+	'".$this->getSurname()."',
+	'".$this->getEmail()."',
+	'".date('Y-m-d H:i:s')."'
+	)";
+
+	mysql_query($sql) or die('Error: '.mysql_error ());
+
+	$this->login();
 }
-
-
-public static function validateLogin($username, $password){
-//TODO: Inner join to check whether use is staff or student
-
-  $passwordHash = sha1($username.$password);
+public static function baseQuery(){
 	$sql="SELECT wv_person.*, wv_staff.VchPersonIDFK as VchStaffID FROM wv_person";
   $sql.=" LEFT JOIN (wv_staff) ON (wv_staff.VchPersonIDFK = wv_person.VchPersonIDPK)";
-  $sql.=" WHERE VchPersonIDPK = '".$username."'"." AND vchPersonPassword = '".$passwordHash."'";
-	
-	$result = mysql_query($sql) or die('Error: '.mysql_error ());
-	while($row = mysql_fetch_array($result))
-	{
-	 $personID = $row['VchPersonIDPK'];
-	 $password = $row['VchPersonPassword'];
-	 $forename = $row['VchPersonForeName'];
-	 $surname = $row['VchPersonLastName'];
-	 $email = $row['VchPersonEmail'];
-	 $joinDate = $row['DateTimePersonRegistered'];
-	 $staffNum = $row['VchStaffID'];
-	if (!is_null($staffNum)){
+  return $sql;
+}
+public static function fromRow($row){
+	$personID = $row['VchPersonIDPK'];
+	$password = $row['VchPersonPassword'];
+	$forename = $row['VchPersonForeName'];
+	$surname = $row['VchPersonLastName'];
+	$email = $row['VchPersonEmail'];
+	$joinDate = $row['DateTimePersonRegistered'];
+	$staffNum = $row['VchStaffID'];
+	 if (!is_null($staffNum)){
     //User is a member of staff
 		$user = Staff::withParameters($personID, $forename, $surname, $password, $email);
 	}else{
 		$user = Student::withParameters($personID, $forename, $surname, $password, $email);
 	}
 	$user->setJoinDate($joinDate);
-	$user->login();
+	
 	return $user;
+}
+public static function validateLogin($username, $password){
+	$passwordHash = sha1($username.$password);
+	$sql= Person::baseQuery();
+	$sql.=" WHERE VchPersonIDPK = '".$username."'"." AND vchPersonPassword = '".$passwordHash."'";
+	$result = mysql_query($sql) or die('Error: '.mysql_error ());
+	while($row = mysql_fetch_array($result))
+	{
+		$user = Person::fromRow($row);
+		$user->login();
+		return $user;
 	}
 	return null;
 }

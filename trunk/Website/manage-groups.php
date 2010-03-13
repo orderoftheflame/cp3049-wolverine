@@ -12,13 +12,28 @@
 			include('error.php');
 		}else{	//Manage any postbacks
 			if (!is_null($_POST['txtGroupName'])){
+				$feedback = Utility::checkPostData(
+				array('Group name'=>$_POST['txtGroupName'],
+				'Details'=>$_POST['txtGroupDetails'])
+				);
+				if (count($feedback) > 0){
+					echo '<div class="error padded margin">
+					<p>Error</p>
+					<ul>';
+					foreach($feedback as $message){
+						echo '<li class="bullets">'.$message.' is required</li>';
+					}
+					echo '</ul></div>';
+				}else{
 				$group = StudentGroup::withParameters($_POST['txtGroupName'],$_POST['txtGroupDetails'],$_POST['ddlDays'],$_POST['ddlHours'].':'.$_POST['ddlMinutes']);
-				$group->save();
-				echo '<p>Group ['.$group->getTitle().'] saved.</p>';
+					$group->save();
+					
+					echo '<div class="error padded margin"><p>Group ['.$group->getTitle().'] saved.</p></div>';
+				}
 			}
 			if(!is_null($_POST['btnRemoveGroup'])){
 				StudentGroup::delete($_POST['ddlGroups']);
-				echo '<p>Group removed.</p>';
+				echo '<div class="error padded margin"><p>Group removed.</p></div>';
 			}
 		}
 	}else{

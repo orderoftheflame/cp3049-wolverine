@@ -45,6 +45,10 @@ display:inline-block;
 }
 
 li {list-style: none;}
+li.bullets{
+list-style:circle;
+margin-left:20px;
+}
 
 h1 {
 	font: normal 1.8em Tahoma,sans-serif;
@@ -331,6 +335,9 @@ clear:both;
 	height:1px;
 	visibility:hidden;
 	background-color:#ffffff;
-
-
+}
+.error{
+	color:#DD3333;
+	font-weight:bold;
+	border:1px solid #DD3333;
 }
