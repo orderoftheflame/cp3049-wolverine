@@ -9,6 +9,17 @@
 		if (!$user->isAdmin()){
 			$rawError = "You do not have permission to access this page";
 			include('error.php');
+		}else{
+			if (!is_null($_POST['txtStaffNumber'])){
+				$personID = $_POST['txtStaffNumber'];
+				$forename = $_POST['txtForename'];
+				$surname = $_POST['txtSurname'];
+				$password = $_POST['txtPassword'];
+				$email = $_POST['txtEmail'];
+				$staff = Staff::withParameters($personID, $forename, $surname, $password, $email);
+				$staff->register(false);
+				echo 'Staff member saved';
+			}
 		}
 	}else{
 		$rawError = "You do not have permission to access this page";
@@ -22,19 +33,30 @@
 <div class="bordered half-width padded right" id="divLogin">
 <p><span class="left"><h2>Current Staff List</h2></span></p>
 <form action="manage-staff.php" method="POST" name="frmManageStaff">
-<select name="ddlSupervisors" id="ddlSupervisors" class="max-width" size="10">
-<option>Derek Beardsmore</option>
-<option>Arline Wilson</option>
-<option>Matthew Burley</option>
+
+<select name="ddlSupervisors" id="ddlSupervisors" class="max-width" onchange="callService('services/staff-details.php',this.value,'loadedDetails');" size="10">
+<?php
+$staff = PersonCollection::fromDatabaseStaff();
+foreach($staff->getPeople() as $staffMember){
+	$staffText = $staffMember->getForename().' '.$staffMember->getSurname();
+	echo Utility::optionBind($staffMember->getPersonID(),$staffText);
+}
+?>
 </select>
 <a href="#" class="yellow bordered padded button">Remove Staff</a>
 </form>
+<div id="staffDetail" class="clearer">
+<h2>Selected staff details:</h2>
+<div id="loadedDetails">Select a member of staff</div>
 </div>
-<form action="register.php" method="post" name="signup">
+	
+
+</div>
+<form action="manage-staff.php" method="post" name="signup">
 <div class="bordered half-width padded left" id="divRegister">
 <p><span class="left"><h2>Register</h2></span></p>
 <p>Please enter your details below to sign up</p>
-<p><span class="left"><label for="txtStudentNumber">Staff Number:</label> </span><span class="right"><input type="text" name="txtStudentNumber" maxlength="120" /></span></p>
+<p><span class="left"><label for="txtStaffNumber">Staff Number:</label> </span><span class="right"><input type="text" name="txtStaffNumber" maxlength="120" /></span></p>
 <p><span class="left"><label for="txtPassword">Password:</label> </span><span class="right"><input type="password" name="txtPassword" maxlength="100" /></span></p>
 <p><span class="left"><label for="txtForename">Forename:</label> </span><span class="right"><input type="text" name="txtForename" maxlength="120" /></span></p>
 <p><span class="left"><label for="txtSurname">Surname:</label> </span><span class="right"><input type="text" name="txtSurname" maxlength="120" /></span></p>

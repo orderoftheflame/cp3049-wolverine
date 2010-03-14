@@ -10,7 +10,7 @@
     $password = $_POST['txtPassword'];
     $email = $_POST['txtEmail'];
     $student = Student::withParameters($personID, $forename, $surname, $password, $email);
-    $student->register();
+    $student->register(true);
     ?>
     Your account has been registered, you can now proceed to <a href="my-account.php">your account</a>
     <?php
