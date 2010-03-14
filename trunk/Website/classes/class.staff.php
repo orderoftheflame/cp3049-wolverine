@@ -7,16 +7,16 @@ protected $isAdmin;
 protected $isModuleLeader;
 public static function withParameters($personID, $forename, $surname, $password, $email)
 {
-	$user = new Staff();
+	$staffMember = new Staff();
 
-	$user->setPersonID($personID);
-	$user->setPassword($password);
-	$user->setForename($forename);
-	$user->setSurname($surname);
-	$user->setEmail($email);
-	$user->loadRoles();	
+	$staffMember->setPersonID($personID);
+	$staffMember->setPassword($password);
+	$staffMember->setForename($forename);
+	$staffMember->setSurname($surname);
+	$staffMember->setEmail($email);
+	$staffMember->loadRoles();	
 	
-	return $user;
+	return $staffMember;
 }
 
 public function loadRoles(){
@@ -40,6 +40,13 @@ return $this->isAdmin;
 private function login(){
 	session_register ("loggedIn");
 	$_SESSION ["loggedIn"] = $this;
+}
+public function register($login){
+	parent::register($login);
+	$sql = "INSERT INTO wv_staff (VchPersonIDFK) VALUES (
+	'".$this->getPersonID()."'
+	)";
+	mysql_query($sql) or die('Error: '.mysql_error ());
 }
 
 

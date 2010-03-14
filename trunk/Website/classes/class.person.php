@@ -35,7 +35,7 @@ public static function PersonExists($personID){
 	}
 }
 
-public function register(){
+public function register($login){
 	$sql = "INSERT INTO wv_person (VchPersonIDPK, VchPersonPassword,VchPersonForeName,VchPersonLastName, VchPersonEmail, DateTimePersonRegistered ) VALUES (
 	'".$this->getPersonID()."',
 	'".sha1($this->getPersonID().$this->getPassword())."',
@@ -46,13 +46,24 @@ public function register(){
 	)";
 
 	mysql_query($sql) or die('Error: '.mysql_error ());
-
-	$this->login();
+	if ($login){
+		$this->login();
+	}
 }
 public static function baseQuery(){
 	$sql="SELECT wv_person.*, wv_staff.VchPersonIDFK as VchStaffID FROM wv_person";
   $sql.=" LEFT JOIN (wv_staff) ON (wv_staff.VchPersonIDFK = wv_person.VchPersonIDPK)";
   return $sql;
+}
+public static function fromDatabase($userID){
+	$sql = Person::baseQuery();
+	$sql .= " WHERE wv_person.VchPersonIDPK = '".$userID."'";
+	$result = mysql_query($sql) or die('Error: '.mysql_error ());
+	while($row = mysql_fetch_array($result))
+	{
+		$user = Person::fromRow($row);
+		return $user;
+	}
 }
 public static function fromRow($row){
 	$personID = $row['VchPersonIDPK'];

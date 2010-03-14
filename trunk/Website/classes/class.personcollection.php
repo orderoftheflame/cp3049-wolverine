@@ -10,14 +10,16 @@ class PersonCollection{
 	
 	public static function fromDatabaseAll()
 	{  
+
 		$sql=Person::baseQuery();
-		executeQuery($sql);
+		
+		return PersonCollection::executeQuery($sql);
 	}
 	public static function fromDatabaseStaff()
 	{  
 		$sql = Person::baseQuery();
-		$sql .= " WHERE VchStaffID IS NOT NULL";
-		executeQuery($sql);
+		$sql .= " WHERE wv_staff.VchPersonIDFK IS NOT NULL";
+		return PersonCollection::executeQuery($sql);
 	}
 	
     protected static function executeQuery($sql){
