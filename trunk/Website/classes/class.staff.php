@@ -32,6 +32,9 @@ public function loadRoles(){
 	}
 }
 public function isStaff(){
+return true;
+}
+public function isModuleLeader(){
 return $this->isModuleLeader;
 }
 public function isAdmin(){
@@ -43,12 +46,19 @@ private function login(){
 }
 public function register($login){
 	parent::register($login);
-	$sql = "INSERT INTO wv_staff (VchPersonIDFK) VALUES (
-	'".$this->getPersonID()."'
+	$sql = " INSERT INTO wv_staff (VchPersonIDFK, BitIsAdmin, BitIsModuleLeader) VALUES (
+	'".$this->getPersonID()."',
+	".$this->isAdmin().",
+	".$this->isModuleLeader()."
 	)";
 	mysql_query($sql) or die('Error: '.mysql_error ());
 }
-
+public function setModuleLeader($value){
+$this->isModuleLeader = $value;
+}
+public function setAdmin($value){
+$this->isAdmin = $value;
+}
 
 }
 ?>

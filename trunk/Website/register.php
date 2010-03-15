@@ -4,16 +4,24 @@
   ob_start();
   
   if (!is_null($_POST['txtStudentNumber'])){
+	//TODO: Better logic here to prevent students inputting staff numbers, which would
+	//prevent us creating the staff later (Duplicate key).
+	
     $personID = $_POST['txtStudentNumber'];
-    $forename = $_POST['txtForename'];
-    $surname = $_POST['txtSurname'];
-    $password = $_POST['txtPassword'];
-    $email = $_POST['txtEmail'];
-    $student = Student::withParameters($personID, $forename, $surname, $password, $email);
-    $student->register(true);
-    ?>
-    Your account has been registered, you can now proceed to <a href="my-account.php">your account</a>
-    <?php
+	if (substr($personID,0,2) != 'in'){
+		$forename = $_POST['txtForename'];
+		$surname = $_POST['txtSurname'];
+		$password = $_POST['txtPassword'];
+		$email = $_POST['txtEmail'];
+		$student = Student::withParameters($personID, $forename, $surname, $password, $email);
+		$student->register(true);
+		?>
+		Your account has been registered, you can now proceed to <a href="my-account.php">your account</a>
+		<?php
+	}else{
+	    $rawError = "Staff cannot register in this way, please contact the admin";
+		include('error.php');  
+	}
   }else{
     $rawError = "Registration failed, data was not complete";
     include('error.php');  
