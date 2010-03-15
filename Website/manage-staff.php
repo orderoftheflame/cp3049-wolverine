@@ -17,6 +17,10 @@
 				$password = $_POST['txtPassword'];
 				$email = $_POST['txtEmail'];
 				$staff = Staff::withParameters($personID, $forename, $surname, $password, $email);
+				$admin = is_null($_POST['chkAdmin']) ? 'false' : 'true';
+				$moduleLeader = is_null($_POST['chkModuleLeader']) ? 'false' : 'true';
+				$staff->setAdmin($admin);
+				$staff->setModuleLeader($moduleLeader);
 				$staff->register(false);
 				echo 'Staff member saved';
 			}
@@ -61,6 +65,10 @@ foreach($staff->getPeople() as $staffMember){
 <p><span class="left"><label for="txtForename">Forename:</label> </span><span class="right"><input type="text" name="txtForename" maxlength="120" /></span></p>
 <p><span class="left"><label for="txtSurname">Surname:</label> </span><span class="right"><input type="text" name="txtSurname" maxlength="120" /></span></p>
 <p><span class="left"><label for="txtEmail">Email:</label> </span><span class="right"><input type="text" name="txtEmail" maxlength="50" /></span></p>
+<p>
+<span class="right clearer"><input type="checkbox" name="chkAdmin" id="chkAdmin" /> Admin 
+<input type="checkbox" name="chkModuleLeader" id="chkModuleLeader" /> Module Leader</span>
+</p>
 <p><span class="right"><input type="submit" name="btnSignUp" value="Create Staff" class="yellow bordered margin" /></span></p>
 <p id="txtUserResult"></p>
 </div>

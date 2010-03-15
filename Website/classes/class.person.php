@@ -18,6 +18,9 @@ public static function withParameters($personID, $forename, $surname, $password,
 	$user->setEmail($email);
 	return $user;
 }
+public function isModuleLeader(){
+	return false;
+}
 public function isStaff(){
 	return false;
 }
@@ -34,16 +37,19 @@ public static function PersonExists($personID){
 		return false;
 	}
 }
-
-public function register($login){
-	$sql = "INSERT INTO wv_person (VchPersonIDPK, VchPersonPassword,VchPersonForeName,VchPersonLastName, VchPersonEmail, DateTimePersonRegistered ) VALUES (
+public function registrationSql(){
+$sql = "INSERT INTO wv_person (VchPersonIDPK, VchPersonPassword,VchPersonForeName,VchPersonLastName, VchPersonEmail, DateTimePersonRegistered ) VALUES (
 	'".$this->getPersonID()."',
 	'".sha1($this->getPersonID().$this->getPassword())."',
 	'".$this->getForename()."',
 	'".$this->getSurname()."',
 	'".$this->getEmail()."',
 	'".date('Y-m-d H:i:s')."'
-	)";
+	);";
+	return $sql;
+}
+public function register($login){
+	$sql = $this->registrationSql();
 
 	mysql_query($sql) or die('Error: '.mysql_error ());
 	if ($login){
