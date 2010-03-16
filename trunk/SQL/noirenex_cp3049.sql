@@ -138,8 +138,8 @@ CREATE TABLE `wv_proojecttypelink` (
 DROP TABLE IF EXISTS `wv_staff`;
 CREATE TABLE `wv_staff` (
   `VchPersonIDFK` varchar(256) NOT NULL,
-  `BoolIsAdmin` bit(1) NOT NULL,
-  `BoolIsModuleLeader` bit(1) NOT NULL,
+  `BoolIsAdmin` tinyint(1) NOT NULL,
+  `BoolIsModuleLeader` tinyint(1) NOT NULL,
   PRIMARY KEY (`VchPersonIDFK`),
   UNIQUE KEY `StaffPK` (`VchPersonIDFK`),
   CONSTRAINT `staff_person_FK` FOREIGN KEY (`VchPersonIDFK`) REFERENCES `wv_person` (`VchPersonIDPK`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -167,6 +167,7 @@ CREATE TABLE `wv_staffstudentgrouplink` (
 -- ----------------------------
 -- Table structure for `wv_studentgroups`
 -- ----------------------------
+DROP TABLE IF EXISTS `wv_studentgroups`;
 CREATE TABLE `wv_studentgroups` (
   `IntGroupID` int(11) NOT NULL AUTO_INCREMENT,
   `VchGroupTitle` varchar(64) NOT NULL,
@@ -221,4 +222,27 @@ CREATE TABLE `wv_userprojectlink` (
 
 -- ----------------------------
 -- Records of wv_userprojectlink
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `wv_feedback`
+-- ----------------------------
+DROP TABLE IF EXISTS `wv_feedback`;
+CREATE TABLE `wv_feedback` (
+  `VchPersonIDFK` varchar(256) NOT NULL,
+  `IntProjectIDFK` int(11) NOT NULL,
+  `BoolJournal` tinyint(1) NOT NULL,
+  `BoolAttended` tinyint(1) NOT NULL,
+  `IntOnTarget` int(11) NOT NULL,
+  `VchNotes` varchar(3000) DEFAULT NULL,
+  `VchStudentFeedback` varchar(3000) DEFAULT NULL,
+  `IntWeekNumber` int(11) NOT NULL,
+  PRIMARY KEY (`VchPersonIDFK, IntWeekNumber`),
+  UNIQUE KEY `feedback_PK` (`VchPersonIDFK`) USING BTREE,
+  CONSTRAINT `feedback_proj_ID` FOREIGN KEY (`IntProjectIDFK`) REFERENCES `wv_project` (`IntProjectIDPK`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `feedback_user_ID` FOREIGN KEY (`VchPersonIDFK`) REFERENCES `wv_user` (`VchPersonIDFK`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of wv_feedback
 -- ----------------------------
