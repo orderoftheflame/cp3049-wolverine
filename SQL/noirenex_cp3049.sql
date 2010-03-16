@@ -62,8 +62,6 @@ CREATE TABLE `wv_person` (
 -- ----------------------------
 -- Records of wv_person
 -- ----------------------------
-INSERT INTO `wv_person` VALUES ('0601163', 'Danny', 'Dawes', 'd.dawes@wlv.ac.uk', 'e860705d2b061a6853517cac9b524be4bf41bace', '0000-00-00 00:00:00');
-INSERT INTO `wv_person` VALUES ('0607658', 'Ben', 'Mitchell', 'ben.mitchell@wlv.ac.uk', '4a9a355ddb627100671cd4774209fde5effd76d3', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for `wv_pr02`
@@ -149,6 +147,38 @@ CREATE TABLE `wv_staff` (
 
 -- ----------------------------
 -- Records of wv_staff
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `wv_staffstudentgrouplink`
+-- ----------------------------
+DROP TABLE IF EXISTS `wv_staffstudentgrouplink`;
+CREATE TABLE `wv_staffstudentgrouplink` (
+  `IntLinkID` int(11) NOT NULL AUTO_INCREMENT,
+  `IntGroupID` int(11) NOT NULL,
+  `VchPersonIDFK` varchar(256) NOT NULL,
+  PRIMARY KEY (`IntLinkID`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+-- ----------------------------
+-- Records of wv_staffstudentgrouplink
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `wv_studentgroups`
+-- ----------------------------
+CREATE TABLE `wv_studentgroups` (
+  `IntGroupID` int(11) NOT NULL AUTO_INCREMENT,
+  `VchGroupTitle` varchar(64) NOT NULL,
+  `VchGroupDetails` varchar(512) NOT NULL,
+  `VchGroupDay` varchar(16) NOT NULL,
+  `TimeGroupMeeting` time NOT NULL,
+  `DateTimeCreated` datetime NOT NULL,
+  PRIMARY KEY (`IntGroupID`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+-- ----------------------------
+-- Records of wv_studentgroups
 -- ----------------------------
 
 -- ----------------------------
