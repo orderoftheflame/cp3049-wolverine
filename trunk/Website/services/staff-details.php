@@ -5,15 +5,48 @@ include('init.php');
 $query = $_GET['q'];
 if (!is_null($query)){
 	$staff = Person::fromDatabase($query);
+	echo '<div id="staffServicePanel">';
 echo <<< DETAIL
 	<p><span class="left">Name</span><span class="right">{$staff->getForename()} {$staff->getSurname()}</span></p>
 	<p><span class="left">Email</span><span class="right">{$staff->getEmail()}</span></p>
-	<p><span class="left">Groups:</span><span class="right">Total: 2 (<a href="#" onclick="Effect.toggle('staffGroups', 'slide'); return false;">Show/Hide</a>)</span></p>
-	<div id="staffGroups" class="clearer" style="display:none;"><div>
-	Group A - Mon at 09:00<br />
-	Group B - Tue at 10:00<br />
-	</div></div>
 DETAIL;
+$admin='No';
+$moduleLeader='No';
+if ($staff->isAdmin()){
+$admin='Yes';
+}
+if ($staff->isModuleLeader()){
+$moduleLeader='Yes';
+}
+
+$groups = StudentGroupCollection::fromDatabaseStaff($query);
+$groupBindings = "";
+foreach($groups->getGroups() as $group){
+$groupText = $group->getTitle().' - '.substr($group->getDay(),0,3).' at '.substr($group->getTime(),0,5);
+	$groupBindings .= Utility::optionBind($group->getGroupID(),$groupText);
+}
+$groups = StudentGroupCollection::fromDatabaseUnassigned();
+$groupBindingsUnassigned = "";
+foreach($groups->getGroups() as $group){
+$groupText = $group->getTitle().' - '.substr($group->getDay(),0,3).' at '.substr($group->getTime(),0,5);
+	$groupBindingsUnassigned .= Utility::optionBind($group->getGroupID(),$groupText);
+}
+
+echo '<p><span class="left">Admin</span><span class="right">'.$admin.'</span></p>';
+echo '<p><span class="left">Module Leader</span><span class="right">'.$moduleLeader.'</span></p>';
+echo '<p><span class="left">My Groups:</span><span class="right"><select>'.$groupBindings.'</select></span></p>';
+echo '<p class="clearer"><a href="#" class="yellow bordered button">Remove selected</a></p>';
+echo '<p><span class="left">Unassigned Groups:</span><span class="right"><select name="ddlUnassignedGroups_Staff" id="ddlUnassignedGroups_Staff">'.$groupBindingsUnassigned.'</select></span></p>';
+//DD- The service needs to be more secure, since anyone could call it and assign groups otherwise.
+
+//REFRESH DATA
+$serviceCall = "runSpecial('ddlUnassignedGroups_Staff','services/assign-group.php','".$query."','groupResult')";
+$serviceCall2 = "callService('services/staff-details.php','".$query."','staffServicePanel')";
+echo '<p class="clearer"><a href="#" class="yellow bordered button" onclick="'.$serviceCall.'; '.$serviceCall2.'">Add selected</a></p>';
+echo '<div id="groupResult">&nbsp;</div>';
+
+echo '</div>'; //End of service panel
+
 }else{
 echo 'Error: Query was null';
 }

@@ -31,21 +31,22 @@ $accountControls = <<<ACC_CONTROLS
 <p><label for="txtTitle">Title:</label></p>
 <input type="text" name="txtTitle" />
 <p><label for="txtMessage">Message:</label></p>
-<textarea name="txtMessage"></textarea>
+<textarea name="txtMessage"></textarea> 
 <input type="submit" name="btnSubmit" class="yellow bordered button" value="Send" />
 </form>
 </div></div>
 
-	<h1>Your account - Student</h1>
+	<h1>Your account - Staff</h1>
   <div class="left half-width bordered padded">
   <h2>Control Panel</h2>
-  <a href="#" class="yellow bordered button max-width">Submit PR02</a><br />
-  <a href="#" class="yellow bordered button max-width">Upload Interim Report</a><br />
-  <a href="#" class="yellow bordered button max-width">Request ethical approval</a><br />
-  <a href="student-weekly-feedback.php" class="yellow bordered button max-width">Weekly Meeting Feedback</a><br />
-  </div>
+  <a href="weekly-meetings.php" class="yellow bordered button max-width">Weekly Meetings</a><br />
+  <a href="marking-grid.php" class="yellow bordered button max-width">View Interim Reports</a><br />
+  <a href="#" class="yellow bordered button max-width">View Draft Reports</a><br />
+  <a href="#" class="yellow bordered button max-width">View Final Report</a><br />
+  </div> 
   <div class="right half-width bordered padded">
   <h2>Selected Project</h2>
+  <h3>Change to list of students? and messages</h3>
   <p>Title: <strong>Sample project</strong></p>
   <p>Description:</p>
   <p>To design and build an online accountancy package that will automatically invoice clients and notify administrators when payment is received.</p>

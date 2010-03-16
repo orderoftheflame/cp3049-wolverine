@@ -36,25 +36,7 @@
 <h1>Create staff</h1>
 <div class="bordered half-width padded right" id="divLogin">
 <p><span class="left"><h2>Current Staff List</h2></span></p>
-<form action="manage-staff.php" method="POST" name="frmManageStaff">
-
-<select name="ddlSupervisors" id="ddlSupervisors" class="max-width" onchange="callService('services/staff-details.php',this.value,'loadedDetails');" size="10">
-<?php
-$staff = PersonCollection::fromDatabaseStaff();
-foreach($staff->getPeople() as $staffMember){
-	$staffText = $staffMember->getForename().' '.$staffMember->getSurname();
-	echo Utility::optionBind($staffMember->getPersonID(),$staffText);
-}
-?>
-</select>
-<a href="#" class="yellow bordered padded button">Remove Staff</a>
-</form>
-<div id="staffDetail" class="clearer">
-<h2>Selected staff details:</h2>
-<div id="loadedDetails">Select a member of staff</div>
-</div>
-	
-
+<?php include('controls/ctrl.staff.php'); ?>
 </div>
 <form action="manage-staff.php" method="post" name="signup">
 <div class="bordered half-width padded left" id="divRegister">
