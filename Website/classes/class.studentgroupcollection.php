@@ -13,7 +13,20 @@ class StudentGroupCollection{
 		$sql = "SELECT * FROM wv_studentgroups ORDER BY VchGroupTitle";
 		return StudentGroupCollection::executeQuery($sql);
 	}
-	
+	public static function fromDatabaseStaff($staffID)
+	{  
+		$sql = "SELECT g.* FROM wv_studentgroups g";
+		$sql .= " INNER JOIN wv_staffstudentgrouplink s ON s.IntGroupID = g.IntGroupID";
+		$sql .= " WHERE s.VchPersonIDFK = '".$staffID."'";
+		return StudentGroupCollection::executeQuery($sql);
+	}
+		public static function fromDatabaseUnassigned()
+	{  
+		$sql = "SELECT g.* FROM wv_studentgroups g";
+		$sql .= " LEFT JOIN wv_staffstudentgrouplink s ON s.IntGroupID = g.IntGroupID";
+		$sql .= " WHERE s.VchPersonIDFK IS NULL";
+		return StudentGroupCollection::executeQuery($sql);
+	}
     protected static function executeQuery($sql){
       $studentGroupCollection = new StudentGroupCollection();
       $queryResult = mysql_query($sql) or die('Error: '.mysql_error ());

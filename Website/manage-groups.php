@@ -45,22 +45,7 @@
 
 <div class="bordered half-width padded right" id="divLogin">
 <p><span class="left"><h2>Current group List</h2></span></p>
-<form action="manage-groups.php" method="POST" name="frmManageGroups">
-<select name="ddlGroups" id="ddlGroups" class="max-width" size="10" onchange="callService('services/group-details.php',this.value,'loadedDetails');">
-<?php
-$groups = StudentGroupCollection::fromDatabase();
-foreach($groups->getGroups() as $group){
-$groupText = $group->getTitle().' - '.substr($group->getDay(),0,3).' at '.substr($group->getTime(),0,5);
-	echo Utility::optionBind($group->getGroupID(),$groupText);
-}
- ?>
-</select>
-<input type="submit" onclick="return confirm('Are you sure? Any students in the group will become unassigned')" class="yellow bordered margin button" name="btnRemoveGroup" id="btnRemoveGroup" value="Remove Group" />
-</form>
-<div id="groupDetails" class="clearer">
-<h2>Selected group details:</h2>
-<div id="loadedDetails">Select a group</div>
-</div>
+<?php include('controls/ctrl.groups.php'); ?>
 </div>
 
 <form action="manage-groups.php" method="post" name="creategroup">

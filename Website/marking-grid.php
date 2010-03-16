@@ -141,65 +141,34 @@
 	}
 
 	</script>
-	<div style="float:left"><a href="#">< Previous Week</a></div>
-	<div style="float:right"><a href="#">Next Week ></a></div> 
-	<div style="text-align:center;"><h2>Week 3</h2></div>
-	<br> 
 	<!--put this in loop calling sutents for this supervisor-->
+	
 	<div class="windowContainer"> 
-		<div class="StudentWindowTitle">
-			<div style="float:right; font-size:140%; font-weight:normal; padding-right:5px; cursor:pointer;" onclick="toggleWindow('Student1',0,270);">[Show Feedback]</div>
-			<div class="StudentName">0613584 - Andrew Cashmore</div>
-			<table>
-				<tr>
-					<th style="text-align:center; width:120px;">
-						Attended <?=helpIcon("Did the student attend the meeting?", "#")?>
-					</th>
-					<th style="text-align:center; width:120px;">
-						Journal Signed <?=helpIcon("Was the students project journal seen and signed?", "#")?>
-					</th>
-					<th style="text-align:center; width:120px;">
-						On Target <?=helpIcon("Do you feel the Student is on target?", "#")?>
-					</th>
-				</tr>
-				<tr>
-					<td style="text-align:center;">
-						<input type="checkbox" name="attendedStudent1" /> 
-					</td>
-					<td style="text-align:center;">
-						<input type="checkbox" name="journalStudent1" /> 
-					</td>
-					<td style="text-align:center;">
-						<input type="checkbox" name="targetStudent1" /> 
-					</td>
-				</tr>
-			</table>
+		<div class="StudentFeedbackWindowTitle">
+			<div style="float:right; font-size:140%; font-weight:normal; padding-right:5px; cursor:pointer;" onclick="toggleWindow('Student1',0,150);">[Show Feedback]</div>
+			<div class="StudentName">0613584 - Andrew Cashmore - Week 1</div>
 		</div>
 		<div id="Student1" class="expandableWindowContent">
 			<form>
-				<table style="width:100%;">
-					<tr>
-						<td>
-							<br><h4>Notes</h4>
-							<textarea rows="5" cols="20" style="width:90%; font: normal 100% Tahoma,sans-serif;" name="feedbackStudent1"></textarea>
-							<br><h4>Previous Weeks Note</h4>
-							<textarea rows="5" cols="20" style="width:90%; font: normal 100% Tahoma,sans-serif;" name="previousFeedBackStudent1" readonly>Last weeks feedback etc etc etc</textarea>
-							<br/><input type="button" value="Update" onclick="alert('Sorry this feature is still under construction.')">
-						</td>
-						<td>
-							<br><h4>Feedback To Student</h4>
-							<textarea rows="5" cols="20" style="width:90%; font: normal 100% Tahoma,sans-serif;" name="feedbackStudent1"></textarea>
-							<br><h4>Previous Weeks Feedback To Student</h4>
-							<textarea rows="5" cols="20" style="width:90%; font: normal 100% Tahoma,sans-serif;" name="previousFeedBackStudent1" readonly>Last weeks feedback etc etc etc</textarea>
-							<br/><input type="button" value="Update" onclick="alert('Sorry this feature is still under construction.')">
-						</td> 
-					</tr>
-				</table>
-			</form>
+				<br><h4>Feedback</h4> 
+				<textarea rows="7" cols="20" style="width:50%; font: normal 100% Tahoma,sans-serif;" name="previousFeedBackStudent1" readonly>Last weeks feedback etc etc etc</textarea>
+			</form> 
+		</div>
+	</div>
+	<br> 
+	<div class="windowContainer"> 
+		<div class="StudentFeedbackWindowTitle">
+			<div style="float:right; font-size:140%; font-weight:normal; padding-right:5px; cursor:pointer;" onclick="toggleWindow('Student2',0,150);">[Show Feedback]</div>
+			<div class="StudentName">0613584 - Andrew Cashmore - Week 2</div>
+		</div>
+		<div id="Student2" class="expandableWindowContent">
+			<form> 
+				<br><h4>Feedback</h4> 
+				<textarea rows="7" cols="20" style="width:50%; font: normal 100% Tahoma,sans-serif;" name="previousFeedBackStudent1" readonly>Last weeks feedback etc etc etc</textarea>
+			</form> 
 		</div>
 	</div>
 	<br>
-	
 <?php
 	}
   }

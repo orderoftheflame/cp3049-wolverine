@@ -27,6 +27,16 @@ public static function fromDatabase($groupID){
 	return StudentGroup::fromRow($row);
 	}
 }
+
+public static function assignGroupToStaff($staffNumber){
+  $sql = "INSERT INTO wv_staffstudentgrouplink (IntGroupID, VchPersonIDFK)
+  VALUES (
+    ".$this->getGroupID().",
+    '".$staffNumber."'
+  )";
+   mysql_query($sql) or die('Error: '.mysql_error ());
+}
+
 public static function fromRow($row){
 	$groupID = $row['IntGroupID'];
 	$title = $row['VchGroupTitle'];
