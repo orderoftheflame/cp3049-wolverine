@@ -1,19 +1,17 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : WAMP
-Source Server Version : 50136
-Source Host           : localhost:3306
-Source Database       : noirenex_cp3049
-
-Target Server Type    : MYSQL
-Target Server Version : 50136
-File Encoding         : 65001
-
-Date: 2010-03-09 19:04:35
-*/
-
 SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `wv_assignment`
+-- ----------------------------
+DROP TABLE IF EXISTS `wv_assignment`;
+CREATE TABLE `wv_assignment` (
+  `IntAssignmentIDPK` int(11) NOT NULL,
+  `IntProjectIDFK` int(11) NOT NULL,
+  `VchAssignmentType` varchar(100) NOT NULL,
+  PRIMARY KEY (`IntAssignmentIDPK`),
+  UNIQUE KEY `assignment_pk` (`IntAssignmentIDPK`),
+  KEY `assignmentupl_fk` (`IntProjectIDFK`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 -- ----------------------------
 -- Table structure for `wv_awardtype`
 -- ----------------------------
@@ -23,26 +21,38 @@ CREATE TABLE `wv_awardtype` (
   `VchAwardTitle` varchar(256) NOT NULL,
   PRIMARY KEY (`IntAwardTypeIDPK`),
   UNIQUE KEY `AwardTypePK` (`IntAwardTypeIDPK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
--- Records of wv_awardtype
+-- Table structure for `wv_feedback`
 -- ----------------------------
+DROP TABLE IF EXISTS `wv_feedback`;
+CREATE TABLE `wv_feedback` (
+  `VchPersonIDFK` varchar(256) NOT NULL,
+  `IntProjectIDFK` int(11) NOT NULL,
+  `BoolJournal` bit(1) NOT NULL,
+  `BoolAttended` bit(1) NOT NULL,
+  `IntOnTarget` int(11) DEFAULT NULL,
+  `VchNotes` varchar(3000) DEFAULT NULL,
+  `VchStudentFeedback` varchar(3000) DEFAULT NULL,
+  `IntWeekNumber` int(11) NOT NULL,
+  `VchMilestoneFeedback` varchar(5000) DEFAULT NULL,
+  `VchMilestoneNotes` varchar(3000) DEFAULT NULL,
+  PRIMARY KEY (`VchPersonIDFK`),
+  UNIQUE KEY `feedback_PK` (`IntProjectIDFK`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for `wv_grade`
 -- ----------------------------
 DROP TABLE IF EXISTS `wv_grade`;
 CREATE TABLE `wv_grade` (
-  `IntProjectIDFK` int(11) NOT NULL,
-  PRIMARY KEY (`IntProjectIDFK`),
-  UNIQUE KEY `grade_PK` (`IntProjectIDFK`),
-  CONSTRAINT `grade_project_FK` FOREIGN KEY (`IntProjectIDFK`) REFERENCES `wv_userprojectlink` (`IntProjectIDFK`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of wv_grade
--- ----------------------------
+  `IntGradeIDPK` int(11) NOT NULL,
+  `AssignmentIDFK` int(11) NOT NULL,
+  `IntGradValue` int(11) NOT NULL,
+  `VchFeedback` varchar(3000) NOT NULL,
+  PRIMARY KEY (`IntGradeIDPK`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for `wv_person`
@@ -57,11 +67,18 @@ CREATE TABLE `wv_person` (
   `DateTimePersonRegistered` datetime NOT NULL,
   PRIMARY KEY (`VchPersonIDPK`),
   UNIQUE KEY `PersonPK` (`VchPersonIDPK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
--- Records of wv_person
+-- Table structure for `wv_personstudentgrouplink`
 -- ----------------------------
+DROP TABLE IF EXISTS `wv_personstudentgrouplink`;
+CREATE TABLE `wv_personstudentgrouplink` (
+  `IntStudentGroupLinkIDPK` int(11) NOT NULL AUTO_INCREMENT,
+  `IntGroupIDFK` int(11) NOT NULL,
+  `VchPersonIDFK` varchar(256) NOT NULL,
+  PRIMARY KEY (`IntStudentGroupLinkIDPK`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for `wv_pr02`
@@ -71,33 +88,23 @@ CREATE TABLE `wv_pr02` (
   `IntProjectIDFK` int(11) NOT NULL,
   `VchTitle` varchar(256) NOT NULL,
   PRIMARY KEY (`IntProjectIDFK`),
-  UNIQUE KEY `pr02_PK` (`IntProjectIDFK`),
-  CONSTRAINT `pr02_project` FOREIGN KEY (`IntProjectIDFK`) REFERENCES `wv_userprojectlink` (`IntProjectIDFK`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of wv_pr02
--- ----------------------------
+  UNIQUE KEY `pr02_PK` (`IntProjectIDFK`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for `wv_project`
 -- ----------------------------
 DROP TABLE IF EXISTS `wv_project`;
 CREATE TABLE `wv_project` (
-  `IntProjectIDPK` int(11) NOT NULL,
+  `IntProjectIDPK` int(11) NOT NULL AUTO_INCREMENT,
   `VchProjectTitle` varchar(256) NOT NULL,
   `VchProjectDetails` varchar(5000) DEFAULT NULL,
   `DateTimeSubmitted` datetime NOT NULL,
   `VchSubmittedByFK` varchar(256) NOT NULL,
   PRIMARY KEY (`IntProjectIDPK`),
   UNIQUE KEY `projectPK` (`IntProjectIDPK`),
-  KEY `proj_subby_FK` (`VchSubmittedByFK`),
-  CONSTRAINT `proj_subby_FK` FOREIGN KEY (`VchSubmittedByFK`) REFERENCES `wv_person` (`VchPersonIDPK`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of wv_project
--- ----------------------------
+  KEY `proj_subby_FK` (`VchSubmittedByFK`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for `wv_projecttype`
@@ -108,11 +115,7 @@ CREATE TABLE `wv_projecttype` (
   `VchProjectTypeTitle` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`IntProjectTypeIDPK`),
   UNIQUE KEY `project_type_PK` (`IntProjectTypeIDPK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of wv_projecttype
--- ----------------------------
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for `wv_proojecttypelink`
@@ -123,14 +126,8 @@ CREATE TABLE `wv_proojecttypelink` (
   `IntProjectTypeIDFK` int(11) NOT NULL,
   PRIMARY KEY (`IntProjectIDFK`,`IntProjectTypeIDFK`),
   KEY `project_type_link_PK` (`IntProjectIDFK`,`IntProjectTypeIDFK`),
-  KEY `ptl_projTypeID_FK` (`IntProjectTypeIDFK`),
-  CONSTRAINT `ptl_projID_FK` FOREIGN KEY (`IntProjectIDFK`) REFERENCES `wv_project` (`IntProjectIDPK`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `ptl_projTypeID_FK` FOREIGN KEY (`IntProjectTypeIDFK`) REFERENCES `wv_projecttype` (`IntProjectTypeIDPK`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of wv_proojecttypelink
--- ----------------------------
+  KEY `ptl_projTypeID_FK` (`IntProjectTypeIDFK`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for `wv_staff`
@@ -141,13 +138,8 @@ CREATE TABLE `wv_staff` (
   `BoolIsAdmin` tinyint(1) NOT NULL,
   `BoolIsModuleLeader` tinyint(1) NOT NULL,
   PRIMARY KEY (`VchPersonIDFK`),
-  UNIQUE KEY `StaffPK` (`VchPersonIDFK`),
-  CONSTRAINT `staff_person_FK` FOREIGN KEY (`VchPersonIDFK`) REFERENCES `wv_person` (`VchPersonIDPK`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of wv_staff
--- ----------------------------
+  UNIQUE KEY `StaffPK` (`VchPersonIDFK`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for `wv_staffstudentgrouplink`
@@ -158,11 +150,7 @@ CREATE TABLE `wv_staffstudentgrouplink` (
   `IntGroupID` int(11) NOT NULL,
   `VchPersonIDFK` varchar(256) NOT NULL,
   PRIMARY KEY (`IntLinkID`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
--- ----------------------------
--- Records of wv_staffstudentgrouplink
--- ----------------------------
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for `wv_studentgroups`
@@ -176,13 +164,9 @@ CREATE TABLE `wv_studentgroups` (
   `TimeGroupMeeting` time NOT NULL,
   `DateTimeCreated` datetime NOT NULL,
   PRIMARY KEY (`IntGroupID`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- ----------------------------
--- Records of wv_studentgroups
--- ----------------------------
-
--- ----------------------------
+---------------------------
 -- Table structure for `wv_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `wv_user`;
@@ -191,14 +175,8 @@ CREATE TABLE `wv_user` (
   `VchUserProjectYearStart` int(4) NOT NULL,
   `IntAwardTypeIDFK` int(64) NOT NULL,
   PRIMARY KEY (`VchPersonIDFK`),
-  UNIQUE KEY `userPK` (`IntAwardTypeIDFK`) USING BTREE,
-  CONSTRAINT `user_awardtype_FK` FOREIGN KEY (`IntAwardTypeIDFK`) REFERENCES `wv_awardtype` (`IntAwardTypeIDPK`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `user_person_FK` FOREIGN KEY (`VchPersonIDFK`) REFERENCES `wv_person` (`VchPersonIDPK`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of wv_user
--- ----------------------------
+  UNIQUE KEY `userPK` (`IntAwardTypeIDFK`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for `wv_userprojectlink`
@@ -213,36 +191,5 @@ CREATE TABLE `wv_userprojectlink` (
   PRIMARY KEY (`VchPersonIDFK`),
   UNIQUE KEY `upl_PK` (`IntProjectIDFK`) USING BTREE,
   KEY `upl_super_ID` (`VchSupervisorFK`),
-  KEY `upl_reader_ID` (`VchReaderFK`),
-  CONSTRAINT `upl_proj_ID` FOREIGN KEY (`IntProjectIDFK`) REFERENCES `wv_project` (`IntProjectIDPK`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `upl_reader_ID` FOREIGN KEY (`VchReaderFK`) REFERENCES `wv_staff` (`VchPersonIDFK`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `upl_super_ID` FOREIGN KEY (`VchSupervisorFK`) REFERENCES `wv_staff` (`VchPersonIDFK`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `upl_user_ID` FOREIGN KEY (`VchPersonIDFK`) REFERENCES `wv_user` (`VchPersonIDFK`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of wv_userprojectlink
--- ----------------------------
-
--- ----------------------------
--- Table structure for `wv_feedback`
--- ----------------------------
-DROP TABLE IF EXISTS `wv_feedback`;
-CREATE TABLE `wv_feedback` (
-  `VchPersonIDFK` varchar(256) NOT NULL,
-  `IntProjectIDFK` int(11) NOT NULL,
-  `BoolJournal` tinyint(1) NOT NULL,
-  `BoolAttended` tinyint(1) NOT NULL,
-  `IntOnTarget` int(11) NOT NULL,
-  `VchNotes` varchar(3000) DEFAULT NULL,
-  `VchStudentFeedback` varchar(3000) DEFAULT NULL,
-  `IntWeekNumber` int(11) NOT NULL,
-  PRIMARY KEY (`VchPersonIDFK, IntWeekNumber`),
-  UNIQUE KEY `feedback_PK` (`VchPersonIDFK`) USING BTREE,
-  CONSTRAINT `feedback_proj_ID` FOREIGN KEY (`IntProjectIDFK`) REFERENCES `wv_project` (`IntProjectIDPK`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `feedback_user_ID` FOREIGN KEY (`VchPersonIDFK`) REFERENCES `wv_user` (`VchPersonIDFK`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of wv_feedback
--- ----------------------------
+  KEY `upl_reader_ID` (`VchReaderFK`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
