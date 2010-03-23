@@ -7,18 +7,13 @@ class ProjectCollection{
 	public function add($value) {
 		$this->projects[$this->totalProjects++] = $value;
 	}
-	
-	public static function fromDatabase()
-	{  
-		$sql = "SELECT * FROM tblProjects";
-		return ProjectCollection::executeQuery($sql);
-	}
-	
-    public static function fromDatabaseSearch($keywords)
-	{  
-		$sql = "SELECT * FROM tblProjects WHERE vchTitle LIKE '%".$keywords."%' OR vchDetails LIKE '".$keywords."'";
-		return ProjectCollection::executeQuery($sql);
-	}
+
+	public static function fromDatabaseStaffIdeas(){
+    $sql = "SELECT p.* FROM wv_project p";
+    $sql .= " LEFT JOIN wv_staff s ON s.VchPersonIDFK = p.VchSubmittedByFK";
+    $sql .= " WHERE s.VchPersonIDFK IS NOT NULL";
+    return ProjectCollection::executeQuery($sql);
+  }
 	
 	public static function fromDatabaseAuthor($author)
 	{  

@@ -26,8 +26,8 @@ public function loadRoles(){
 	$result = mysql_query($sql) or die('Error: '.mysql_error ());
 	while($row = mysql_fetch_array($result))
 	{
-	 $this->isAdmin = ($row['BitIsAdmin'] == 1 ? true : false);
-	 $this->isModuleLeader = ($row['BitIsModuleLeader'] == 1 ? true : false);
+	 $this->isAdmin = ($row['BoolIsAdmin'] == 1 ? true : false);
+	 $this->isModuleLeader = ($row['BoolIsModuleLeader'] == 1 ? true : false);
 	 return;
 	}
 }

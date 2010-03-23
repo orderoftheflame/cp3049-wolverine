@@ -84,18 +84,27 @@ Wolverine
       echo '</ul>';
     }
   }
+  
+  if (!is_null($loggedInUser)){
+    if ($loggedInUser->isStaff()){
+      echo '<h2>Staff</h2>';
+      echo '<ul>';
+      echo '<li><a href="weekly-meetings.php?weeknumber=$weeknumber">Weekly Meetings</a></li>';
+      echo '<li><a href="student-groups-overview.php">View My students</a></li>';
+      echo '</ul>';
+    }
+  }
+  
+   if (!is_null($loggedInUser)){
+   if (!$loggedInUser->isStaff()){
+      echo '<h2>Student</h2>';
+      echo '<ul>';
+      echo '<li><a href="student-weekly-feedback.php">Weekly Meeting Feedback</a></li>';
+      echo '</ul>';
+    }
+  }
   ?>
-			<h2>Some heading</h2>
-			<ul>
-				<li><a href="#">Some link</a></li>
-			</ul>
-			<h2>Some other</h2>
-			<ul>
-				<li><a href="http://www.google.com">Google </a></li>
-		<li><a href="http://www.yahoo.com">Yahoo</a></li>
-		</ul>
-            <br />
-            <br />
+
   
 		
 </div>

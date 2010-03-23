@@ -9,17 +9,34 @@
     $rawError = "You are not logged in, please login to submit projects";
     include('error.php');
   }else{
-  
+   $pr01 = Project::fromDatabasePerson($user->getPersonID());
+    if (!is_null($pr01)){
+      if (!$user->isStaff()){
+        if ($_GET['remove']){
+          $pr01->remove();
+          $rawError='Project removed, <a href="submit-project.php">click here to continue.</a>';
+          include('message.php');
+        }else{
+        $rawError = "<p>You already have your PR01 submitted, you cannot submit again. You can remove the PR01 submission if it has not yet been accepted.</p>";
+        $rawError.= "<p>Title: <strong>".$pr01->getTitle()."</strong></p>";
+        $rawError.= "<p>Details: <strong>".$pr01->getDetails()."</strong></p>";
+        $confirmBox = "return confirm('Are you sure you wish to remove your PR01?')";
+        $rawError.= '<p><a href="submit-project.php?remove=true" class="yellow button margin padded bordered" onClick="'.$confirmBox.'">Remove PR01</a>';
+        include('error.php');
+        }
+      }
+    }
   if (!is_null($_POST['txtProjectTitle'])){
+    $project = Project::withParameters($_POST['txtProjectTitle'], $_POST['txtProjectContent'], $user->getPersonID());
+    $project->submit();
   
+    if ($user->isStaff()){
+      echo '<h1>Idea Submitted</h1><p>Your project idea has been submitted, students can now review and select your project idea, if you have selected to be notifed when a student chooses your project, an e-mail will be sent to your when this happens.</p>';
+    }else{
+      echo '<h1>PR01 Submitted</h1><p>Your project idea has been submitted, you must now wait for the project to be approved by a supervisor, if you wish to edit the project in the mean time, please go to <a href="my-account.php">your account area</a>.</p>';
+    }
   
     ?>
-    <p>If student:<br />
-    Your project idea has been submitted, you must now wait for the project to be approved by a supervisor, if you wish to edit the project in the mean time, please go to <a href="my-account.php">your account area</a>.
-    </p>
-    <p>If staff:<br />
-    Your project idea has been submitted, students can now review and select your project idea, if you have selected to be notifed when a student chooses your project, an e-mail will be sent to your when this happens. 
-    </p>
     <?php
   }else{
   

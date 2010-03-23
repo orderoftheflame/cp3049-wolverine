@@ -13,6 +13,15 @@ class StudentGroupCollection{
 		$sql = "SELECT * FROM wv_studentgroups ORDER BY VchGroupTitle";
 		return StudentGroupCollection::executeQuery($sql);
 	}
+	
+	public static function fromDatabaseAssigned()
+	{  
+		$sql = "SELECT g.* FROM wv_studentgroups g";
+		$sql .= " LEFT JOIN wv_staffstudentgrouplink s ON s.IntGroupID = g.IntGroupID";
+		$sql .= " WHERE s.VchPersonIDFK IS NOT NULL";
+		return StudentGroupCollection::executeQuery($sql);
+	}
+	
 	public static function fromDatabaseStaff($staffID)
 	{  
 		$sql = "SELECT g.* FROM wv_studentgroups g";
@@ -33,6 +42,9 @@ class StudentGroupCollection{
       while($row = mysql_fetch_array($queryResult))
       {
         $group = StudentGroup::fromRow($row);
+        $group->loadOwners();
+		$group->loadStudents();
+        
         $studentGroupCollection->add($group);
       }
       return $studentGroupCollection;
