@@ -86,13 +86,11 @@ CREATE TABLE `wv_personstudentgrouplink` (
 DROP TABLE IF EXISTS `wv_pr02`;
 CREATE TABLE `wv_pr02` (
   `IntProjectIDFK` int(11) NOT NULL,
-  `VchTitle` varchar(256) NOT NULL,
-  `VchTitle` varchar(256) NOT NULL,
-  `VchTitle` varchar(256) NOT NULL,
-  `VchTitle` varchar(256) NOT NULL,
-  `VchTitle` varchar(256) NOT NULL,
-  `VchTitle` varchar(256) NOT NULL,
-  `VchTitle` varchar(256) NOT NULL,
+  `VchTitle` varchar(500) NOT NULL,
+  `VchProductDescription` varchar(5000) NOT NULL,
+  `VchClientName` varchar(500) NOT NULL,
+  `VchHardwareSoftwareReq` varchar(5000) NOT NULL,
+  `VchAimsObjectives` varchar(500) NOT NULL,
   PRIMARY KEY (`IntProjectIDFK`),
   UNIQUE KEY `pr02_PK` (`IntProjectIDFK`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
