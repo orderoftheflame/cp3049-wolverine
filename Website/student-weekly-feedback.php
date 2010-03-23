@@ -141,34 +141,24 @@
 	}
 
 	</script>
-	<!--put this in loop calling sutents for this supervisor-->
-	<div class="windowContainer"> 
+	<?php
+		$feedbackCollection = FeedbackCollection::fromDatabaseStudent($user->getPersonID());
+	
+		foreach($feedbackCollection->getFeedbackArray() as $feedback){
+	?>
+		<div class="windowContainer"> 
 		<div class="StudentFeedbackWindowTitle">
-			<div style="float:right; font-size:140%; font-weight:normal; padding-right:5px; cursor:pointer;" onclick="toggleWindow('Student1',0,150);">[Show Feedback]</div>
-			<div class="StudentName">0613584 - Andrew Cashmore - Week 1</div>
+			<div style="float:right; font-size:140%; font-weight:normal; padding-right:5px; cursor:pointer;" onclick="toggleWindow('week<?=$feedback->getWeekNumber()?>',0,150);">[Show Feedback]</div>
+			<div class="StudentName">Week <?=$feedback->getWeekNumber()?></div>
 		</div>
-		<div id="Student1" class="expandableWindowContent">
-			<form>
-				<br><h4>Feedback</h4> 
-				<textarea rows="7" cols="20" style="width:50%; font: normal 100% Tahoma,sans-serif;" name="previousFeedBackStudent1" readonly>Last weeks feedback etc etc etc</textarea>
-			</form> 
+		<div id="week<?=$feedback->getWeekNumber()?>" class="expandableWindowContent">
+			<h3>Feedback</h3>
+			<br/><p><?=$feedback->getStudentFeedback()?></p>
 		</div>
-	</div>
-	<br>
-	<div class="windowContainer"> 
-		<div class="StudentFeedbackWindowTitle">
-			<div style="float:right; font-size:140%; font-weight:normal; padding-right:5px; cursor:pointer;" onclick="toggleWindow('Student2',0,150);">[Show Feedback]</div>
-			<div class="StudentName">0613584 - Andrew Cashmore - Week 2</div>
-		</div>
-		<div id="Student2" class="expandableWindowContent">
-			<form> 
-				<br><h4>Feedback</h4> 
-				<textarea rows="7" cols="20" style="width:50%; font: normal 100% Tahoma,sans-serif;" name="previousFeedBackStudent1" readonly>Last weeks feedback etc etc etc</textarea>
-			</form> 
-		</div>
-	</div>
-	<br>
-<?php
+		</div>  
+		<br/>
+	<?php
+		}
 	}
   }
 	

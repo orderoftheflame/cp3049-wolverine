@@ -8,8 +8,8 @@ if (!is_null($staffNum) && !is_null($groupID)){
 	$group = StudentGroup::fromDatabase($groupID);
 	$staff = Staff::fromDatabase($staffNum);
 	if (!is_null($staff) && !is_null($group)){
-		StudentGroup::assignGroupToStaff($staffNum);
-		echo 'Group '.$group->getTitle()'. assigned to '.$staff->getForename().' '.$staff->getSurname();
+		$group->assignGroupToStaff($staffNum);
+		echo 'Group assigned';
 	}
 }else{
 echo 'Error: Query was null';

@@ -7,6 +7,8 @@ protected $details;
 protected $day;
 protected $time;
 protected $studentsCollection;
+protected $staffCollecton; //Owners
+ 
 //QUERY: Will a group ever meet more than once a week? In that case we need another table to store meeting days/times.
 public static function withParameters($groupTitle, $details, $day, $time)
 {
@@ -27,13 +29,31 @@ public static function fromDatabase($groupID){
 	return StudentGroup::fromRow($row);
 	}
 }
-
-public static function assignGroupToStaff($staffNumber){
+public function loadOwners(){
+  $this->staffCollection = PersonCollection::fromDatabaseGroupOwners($this->getGroupID());
+}
+public function getOwners(){
+  return $this->staffCollection->getPeople();
+}
+public function loadStudents(){
+	$this->studentsCollection = PersonCollection::fromDatabaseGroupStudents($this->getGroupID());
+}
+public function getStudents(){
+	return $this->studentsCollection->getPeople(); 
+}
+public function assignGroupToStaff($staffNumber){
   $sql = "INSERT INTO wv_staffstudentgrouplink (IntGroupID, VchPersonIDFK)
   VALUES (
     ".$this->getGroupID().",
     '".$staffNumber."'
   )";
+   mysql_query($sql) or die('Error: '.mysql_error ());
+}
+public function unassignGroupToStaff($staffNumber){
+  $sql = "DELETE FROM wv_staffstudentgrouplink
+  WHERE IntGroupID = ".$this->getGroupID()."
+  AND VchPersonIDFK = '".$staffNumber."'
+  ";
    mysql_query($sql) or die('Error: '.mysql_error ());
 }
 

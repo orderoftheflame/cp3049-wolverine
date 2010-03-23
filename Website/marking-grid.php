@@ -141,34 +141,286 @@
 	}
 
 	</script>
-	<!--put this in loop calling sutents for this supervisor-->
 	
-	<div class="windowContainer"> 
-		<div class="StudentFeedbackWindowTitle">
-			<div style="float:right; font-size:140%; font-weight:normal; padding-right:5px; cursor:pointer;" onclick="toggleWindow('Student1',0,150);">[Show Feedback]</div>
-			<div class="StudentName">0613584 - Andrew Cashmore - Week 1</div>
-		</div>
-		<div id="Student1" class="expandableWindowContent">
-			<form>
-				<br><h4>Feedback</h4> 
-				<textarea rows="7" cols="20" style="width:50%; font: normal 100% Tahoma,sans-serif;" name="previousFeedBackStudent1" readonly>Last weeks feedback etc etc etc</textarea>
-			</form> 
-		</div>
-	</div>
-	<br> 
-	<div class="windowContainer"> 
-		<div class="StudentFeedbackWindowTitle">
-			<div style="float:right; font-size:140%; font-weight:normal; padding-right:5px; cursor:pointer;" onclick="toggleWindow('Student2',0,150);">[Show Feedback]</div>
-			<div class="StudentName">0613584 - Andrew Cashmore - Week 2</div>
-		</div>
-		<div id="Student2" class="expandableWindowContent">
-			<form> 
-				<br><h4>Feedback</h4> 
-				<textarea rows="7" cols="20" style="width:50%; font: normal 100% Tahoma,sans-serif;" name="previousFeedBackStudent1" readonly>Last weeks feedback etc etc etc</textarea>
-			</form> 
-		</div>
-	</div>
-	<br>
+	<form>
+	<table border="1"> 
+		<tr>
+			<th>
+				Assessment Criteria
+			</th>
+			<th>
+				A
+			</th>
+			<th>
+				B
+			</th>
+			<th>
+				C
+			</th>
+			<th>
+				D 
+			</th>
+			<th>
+				E
+			</th>
+			<th>
+				F
+			</th>
+		</tr>
+		<tr>
+			<td style="font-weight:bold; vertical-align:top;">
+				Aim, Objectives &amp;
+				confirmation of the Objectives
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="1A"/></p>
+				Aim stated clearly of
+				what is to be achieved.<br/><br/>
+				The objectives are
+				appropriate for the
+				intended project.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="1B"/> </p>
+				Aim stated clearly of
+				what is to be achieved.<br/><br/>
+				The objectives are
+				mainly appropriate for
+				the intended project.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="1C"/> </p>
+				Aim not expressed
+				clearly.<br/><br/>
+				Most of the objectives
+				are appropriate for the
+				intended project.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="1D"/> </p>
+				Somewhat confused
+				statement made of what
+				is to be achieved.<br/><br/>
+				Some of the objectives
+				are appropriate for the
+				intended project.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="1E"/> </p>
+				Unable to distinguish
+				between aim and
+				objectives.<br/><br/>
+				Objectives not stated
+				clearly and are
+				inappropriate. 
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="1F"/> </p>
+				Very poor in all aspects.
+				
+			</td>
+		</tr>
+		<tr>
+			<td style="font-weight:bold; vertical-align:top;">
+				Initial Literature Review
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="2A"/> </p>
+				A very good attempt at
+				establishing the context
+				of the project.<br/><br/>
+				Very good attempt made
+				to identify relevant
+				literature sources that
+				academically underpin
+				the project.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="2B"/> </p>
+				Good attempt at
+				establishing the context
+				of the project.<br/><br/>
+				Good attempt made to
+				identify relevant
+				literature sources that
+				academically underpin
+				the project.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="2C"/> </p>
+				Satisfactory attempt at
+				establishing the context
+				of the project.<br/><br/>
+				Satisfactory attempt
+				made to identify relevant
+				literature that
+				academically underpins
+				the project.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="2D"/> </p>
+				The context in which the
+				project is set is limited.<br/></br>
+				Limited attempt made to
+				identify relevant
+				literature that 
+				academically underpins
+				the project.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="2E"/> </p>
+				There is little attempt to
+				put the project into
+				context.<br/><br/>
+				The relevant literature
+				that academically
+				underpins the project is
+				taken from a limited
+				range of sources - some
+				irrelevant to the project.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="2F"/> </p>
+				Very poor in all aspects.
+				
+			</td>
+		</tr>
+		<tr>
+			<td style="font-weight:bold; vertical-align:top;">
+				Interim deliverables and results
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="3A"/> </p>
+				A very good attempt at
+				communicating some of
+				the final deliverables,
+				key developments or
+				interim products.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="3B"/> </p>
+				A good attempt at
+				communicating some of
+				the final deliverables,
+				key developments or
+				interim products.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="3C"/> </p>
+				A satisfactory attempt at
+				communicating some of
+				the final deliverables,
+				key developments or
+				interim products
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="3D"/> </p>
+				A limited attempt at
+				communicating some of
+				the final deliverables,
+				key developments or
+				interim products.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="3E"/> </p>
+				There is little attempt at
+				communicating any of
+				the final deliverables,
+				key developments or
+				interim products.
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="3F"/> </p>
+				Very poor in all aspects.
+				
+			</td>
+		</tr>
+		<tr>
+			<td style="font-weight:bold; vertical-align:top;">
+				Progress and plans
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="4A"/> </p>
+				A very good attempt at
+				providing a summary of:
+				<li> activities completed
+				to date</li>
+				<li> issues encountered
+				and the measures
+				taken</li>
+				<li> activities to be
+				completed</li>
+				<li> Project approach</li>
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="4B"/> </p>
+				A good attempt at
+				providing a summary of:
+				<li> activities completed
+				to date</li>
+				<li> issues encountered
+				and the measures
+				taken</li>
+				<li> activities to be  
+				completed</li>
+				<li> Project approach</li>
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="4C"/> </p>
+				A satisfactory attempt at
+				providing a summary of:
+				<li> activities completed
+				to date</li>
+				<li> issues encountered
+				and the measures
+				taken</li>
+				<li> activities to be
+				completed</li>
+				<li> Project approach</li>
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="4D"/> </p>
+				A limited attempt at
+				providing a summary of:
+				<li> activities completed
+				to date</li>
+				<li> issues encountered
+				and the measures
+				taken</li>
+				<li> activities to be
+				completed</li>
+				<li> Project approach</li>
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="4E"/> </p>
+				Little attempt at
+				providing a summary of:
+				<li> activities completed
+				to date</li>
+				<li> issues encountered
+				and the measures
+				taken</li>
+				<li> activities to be
+				completed</li>
+				<li> Project approach</li>
+				
+			</td>
+			<td style="vertical-align:top;"><p style="text-align:center"><input type="checkbox" name="4F"/> </p>
+				Very poor in all aspects.
+				
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5">
+				Feedback<br>
+				<textarea style="width:80%;"cols="30" rows="7"></textarea>
+			</td>
+			<td colspan="2" valign="top">
+				Grade
+				<input type="text">
+				<input type="submit" value="complete marking">
+			</td>
+		</tr>
+	</table>
+	
+	</form>
+	
 <?php
 	}
   }
