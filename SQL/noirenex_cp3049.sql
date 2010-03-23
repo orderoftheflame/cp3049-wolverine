@@ -87,6 +87,12 @@ DROP TABLE IF EXISTS `wv_pr02`;
 CREATE TABLE `wv_pr02` (
   `IntProjectIDFK` int(11) NOT NULL,
   `VchTitle` varchar(256) NOT NULL,
+  `VchTitle` varchar(256) NOT NULL,
+  `VchTitle` varchar(256) NOT NULL,
+  `VchTitle` varchar(256) NOT NULL,
+  `VchTitle` varchar(256) NOT NULL,
+  `VchTitle` varchar(256) NOT NULL,
+  `VchTitle` varchar(256) NOT NULL,
   PRIMARY KEY (`IntProjectIDFK`),
   UNIQUE KEY `pr02_PK` (`IntProjectIDFK`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
